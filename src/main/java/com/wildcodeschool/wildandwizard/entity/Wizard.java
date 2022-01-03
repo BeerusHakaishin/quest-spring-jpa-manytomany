@@ -4,7 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 public class Wizard {
@@ -18,6 +23,14 @@ public class Wizard {
     private String birthPlace;
     private String biography;
     private boolean muggle;
+    
+    // add here many to many relation , table and columns
+    @ManyToMany
+    @JoinTable(name = "wizard_course",
+    joinColumns = @JoinColumn(name = "wizard_id"),
+    inverseJoinColumns = @JoinColumn(name = "course_id"))
+    
+    private List<Course> courses; 
 
     public Wizard() {
     }
@@ -76,5 +89,15 @@ public class Wizard {
 
     public void setMuggle(boolean muggle) {
         this.muggle = muggle;
+    }
+    
+    // Add getter and setter below 
+    
+    public List<Course> getCourses() {
+    	return courses;
+    }
+    
+    public void setCourses(List<Course> courses) {
+    	this.courses = courses;
     }
 }
